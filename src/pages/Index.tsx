@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { BookOpen, Layers, CreditCard, Trophy, Sparkles } from "lucide-react";
+import { BookOpen, CreditCard, Trophy, Sparkles, Network } from "lucide-react";
 import CheatSheet from "@/components/CheatSheet";
 import BrowseNames from "@/components/BrowseNames";
 import Flashcards from "@/components/Flashcards";
 import Quiz from "@/components/Quiz";
+import MindMap from "@/components/MindMap";
 
-type Tab = "cheatsheet" | "browse" | "flashcards" | "quiz";
+type Tab = "cheatsheet" | "browse" | "flashcards" | "quiz" | "mindmap";
 
 const tabs: { id: Tab; label: string; icon: React.ReactNode; desc: string }[] = [
   { id: "cheatsheet", label: "চিট শিট", icon: <Sparkles className="h-4 w-4" />, desc: "মনে রাখার শর্টকাট" },
+  { id: "mindmap", label: "মাইন্ডম্যাপ", icon: <Network className="h-4 w-4" />, desc: "গ্রুপ ভিজুয়ালাইজেশন" },
   { id: "browse", label: "সব নাম", icon: <BookOpen className="h-4 w-4" />, desc: "৯৯টি নাম দেখুন" },
   { id: "flashcards", label: "ফ্ল্যাশকার্ড", icon: <CreditCard className="h-4 w-4" />, desc: "অনুশীলন করুন" },
   { id: "quiz", label: "কুইজ", icon: <Trophy className="h-4 w-4" />, desc: "পরীক্ষা দিন" },
@@ -66,6 +68,7 @@ export default function Index() {
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 pb-12">
         {activeTab === "cheatsheet" && <CheatSheet />}
+        {activeTab === "mindmap" && <MindMap />}
         {activeTab === "browse" && <BrowseNames />}
         {activeTab === "flashcards" && <Flashcards />}
         {activeTab === "quiz" && <Quiz />}
