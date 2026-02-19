@@ -49,7 +49,7 @@ export default function MindMap() {
       const el = svgRef.current?.parentElement;
       if (el) {
         const w = el.clientWidth || 800;
-        const h = w < 500 ? Math.min(w * 1.3, 560) : Math.min(w * 1.0, 780);
+        const h = w < 500 ? Math.min(w * 1.5, 640) : Math.min(w * 1.1, 900);
         setDimensions({ w, h });
       }
       setIsDark(document.documentElement.classList.contains("dark"));
@@ -120,15 +120,19 @@ export default function MindMap() {
       return { x: gp.x + r * Math.cos(angle), y: gp.y + r * Math.sin(angle) };
     } else {
       // Three rings for very large groups (9+)
-      const perRing   = Math.ceil(total / 3);
-      const ring      = Math.floor(ni / perRing);
-      const idx       = ni % perRing;
+      // Distribute evenly: ring0 = first 7, ring1 = next 7, ring2 = rest
+      const perRing = Math.ceil(total / 3);
+      const ring    = Math.min(Math.floor(ni / perRing), 2);
+      const idx     = ni - ring * perRing;
       const ringCount = ring === 2 ? total - perRing * 2 : perRing;
-      const r1 = Math.max(leafR * 0.9, nodeW * 0.6);
-      const r2 = r1 + nodeW * 1.0;
-      const r3 = r2 + nodeW * 1.0;
+      // Use node width to compute safe ring radii
+      const r1 = Math.max(leafR * 0.95, nodeW * 0.75);
+      const r2 = r1 + nodeW * 1.3;
+      const r3 = r2 + nodeW * 1.3;
       const r  = ring === 0 ? r1 : ring === 1 ? r2 : r3;
-      const arcSpread = Math.min(Math.PI * 1.0, (ringCount - 1) * 0.42 + 0.35);
+      // Arc spread: enough angular space for ringCount nodes of width nodeW at radius r
+      const minArc    = ringCount <= 1 ? 0 : (ringCount * (nodeW / r)) * 1.05;
+      const arcSpread = Math.min(Math.PI * 1.3, Math.max(minArc, 0.35));
       const gap       = ringCount <= 1 ? 0 : arcSpread / (ringCount - 1);
       const start     = base - arcSpread / 2;
       const angle     = start + gap * idx;
