@@ -92,11 +92,27 @@ export default function MindMap() {
   const groupNames = (label: string) => names99.filter(n => n.group === label);
 
   const leafPos = (gi: number, ni: number, total: number) => {
-    const base   = groupAngle(gi);
-    const spread = Math.min((TWO_PI * 0.38) / totalGroups, Math.PI / (total + 1));
-    const angle  = base - spread * (total - 1) / 2 + spread * ni;
-    const gp     = groupPos(gi);
-    return { x: gp.x + leafR * Math.cos(angle), y: gp.y + leafR * Math.sin(angle) };
+    const gp   = groupPos(gi);
+    const base = groupAngle(gi);
+
+    if (total <= 5) {
+      // Single arc — nicely spread
+      const gap   = total === 1 ? 0 : (Math.PI * 0.75) / (total - 1);
+      const start = base - gap * (total - 1) / 2;
+      const angle = start + gap * ni;
+      return { x: gp.x + leafR * Math.cos(angle), y: gp.y + leafR * Math.sin(angle) };
+    } else {
+      // Two concentric rings so nodes don't pile up
+      const inner     = Math.ceil(total / 2);
+      const isOuter   = ni >= inner;
+      const idx       = isOuter ? ni - inner : ni;
+      const ringCount = isOuter ? total - inner : inner;
+      const r         = isOuter ? leafR * 1.85 : leafR;
+      const gap       = ringCount === 1 ? 0 : (Math.PI * 0.85) / (ringCount - 1);
+      const start     = base - gap * (ringCount - 1) / 2;
+      const angle     = start + gap * idx;
+      return { x: gp.x + r * Math.cos(angle), y: gp.y + r * Math.sin(angle) };
+    }
   };
 
   const handleGroupClick = useCallback((label: string) => {
