@@ -169,25 +169,25 @@ export const names99: Name99[] = [
 ];
 
 export const GROUPS = [
-  { label: "আ", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-  { label: "ল", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" },
-  { label: "হ", color: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30" },
-  { label: "র", color: "bg-violet-500/20 text-violet-300 border-violet-500/30" },
-  { label: "জ", color: "bg-rose-500/20 text-rose-300 border-rose-500/30" },
-  { label: "ক", color: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30" },
-  { label: "খ", color: "bg-orange-500/20 text-orange-300 border-orange-500/30" },
-  { label: "ব", color: "bg-teal-500/20 text-teal-300 border-teal-500/30" },
-  { label: "ম", color: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30" },
-  { label: "গ", color: "bg-lime-500/20 text-lime-300 border-lime-500/30" },
-  { label: "ন", color: "bg-sky-500/20 text-sky-300 border-sky-500/30" },
-  { label: "ত", color: "bg-pink-500/20 text-pink-300 border-pink-500/30" },
-  { label: "ও", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" },
-  { label: "ফ", color: "bg-red-500/20 text-red-300 border-red-500/30" },
-  { label: "স", color: "bg-green-500/20 text-green-300 border-green-500/30" },
-  { label: "দ", color: "bg-slate-500/20 text-slate-300 border-slate-500/30" },
+  { label: "আ", color: "bg-amber-100  dark:bg-amber-500/20  text-amber-700  dark:text-amber-300  border-amber-400  dark:border-amber-500/30" },
+  { label: "ল",  color: "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-400 dark:border-emerald-500/30" },
+  { label: "হ",  color: "bg-cyan-100   dark:bg-cyan-500/20   text-cyan-700   dark:text-cyan-300   border-cyan-400   dark:border-cyan-500/30" },
+  { label: "র",  color: "bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300 border-violet-400 dark:border-violet-500/30" },
+  { label: "জ",  color: "bg-rose-100   dark:bg-rose-500/20   text-rose-700   dark:text-rose-300   border-rose-400   dark:border-rose-500/30" },
+  { label: "ক",  color: "bg-yellow-100 dark:bg-yellow-500/20 text-yellow-700 dark:text-yellow-300 border-yellow-400 dark:border-yellow-500/30" },
+  { label: "খ",  color: "bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-300 border-orange-400 dark:border-orange-500/30" },
+  { label: "ব",  color: "bg-teal-100   dark:bg-teal-500/20   text-teal-700   dark:text-teal-300   border-teal-400   dark:border-teal-500/30" },
+  { label: "ম",  color: "bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border-indigo-400 dark:border-indigo-500/30" },
+  { label: "গ",  color: "bg-lime-100   dark:bg-lime-500/20   text-lime-700   dark:text-lime-300   border-lime-400   dark:border-lime-500/30" },
+  { label: "ন",  color: "bg-sky-100    dark:bg-sky-500/20    text-sky-700    dark:text-sky-300    border-sky-400    dark:border-sky-500/30" },
+  { label: "ত",  color: "bg-pink-100   dark:bg-pink-500/20   text-pink-700   dark:text-pink-300   border-pink-400   dark:border-pink-500/30" },
+  { label: "ও",  color: "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-400 dark:border-purple-500/30" },
+  { label: "ফ",  color: "bg-red-100    dark:bg-red-500/20    text-red-700    dark:text-red-300    border-red-400    dark:border-red-500/30" },
+  { label: "স",  color: "bg-green-100  dark:bg-green-500/20  text-green-700  dark:text-green-300  border-green-400  dark:border-green-500/30" },
+  { label: "দ",  color: "bg-slate-100  dark:bg-slate-500/20  text-slate-700  dark:text-slate-300  border-slate-400  dark:border-slate-500/30" },
 ];
 
 export const getGroupColor = (group: string): string => {
   const found = GROUPS.find(g => g.label === group);
-  return found?.color || "bg-slate-500/20 text-slate-300 border-slate-500/30";
+  return found?.color || "bg-slate-100 dark:bg-slate-500/20 text-slate-700 dark:text-slate-300 border-slate-400 dark:border-slate-500/30";
 };
