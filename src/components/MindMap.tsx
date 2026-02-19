@@ -49,7 +49,7 @@ export default function MindMap() {
       const el = svgRef.current?.parentElement;
       if (el) {
         const w = el.clientWidth || 800;
-        const h = w < 500 ? Math.min(w * 1.1, 480) : Math.min(w * 0.9, 700);
+        const h = w < 500 ? Math.min(w * 1.3, 560) : Math.min(w * 1.0, 780);
         setDimensions({ w, h });
       }
       setIsDark(document.documentElement.classList.contains("dark"));
@@ -94,22 +94,43 @@ export default function MindMap() {
   const leafPos = (gi: number, ni: number, total: number) => {
     const gp   = groupPos(gi);
     const base = groupAngle(gi);
+    const nodeW = isMobile ? 48 : 58; // approximate leaf node width
 
-    if (total <= 5) {
-      // Single arc — nicely spread
-      const gap   = total === 1 ? 0 : (Math.PI * 0.75) / (total - 1);
+    if (total <= 4) {
+      // Single arc
+      const gap   = total === 1 ? 0 : (Math.PI * 0.70) / (total - 1);
       const start = base - gap * (total - 1) / 2;
       const angle = start + gap * ni;
       return { x: gp.x + leafR * Math.cos(angle), y: gp.y + leafR * Math.sin(angle) };
-    } else {
-      // Two concentric rings so nodes don't pile up
+    } else if (total <= 8) {
+      // Two rings — inner: first ceil(total/2), outer: rest
       const inner     = Math.ceil(total / 2);
       const isOuter   = ni >= inner;
       const idx       = isOuter ? ni - inner : ni;
       const ringCount = isOuter ? total - inner : inner;
-      const r         = isOuter ? leafR * 1.85 : leafR;
-      const gap       = ringCount === 1 ? 0 : (Math.PI * 0.85) / (ringCount - 1);
-      const start     = base - gap * (ringCount - 1) / 2;
+      // Dynamic radius: enough space so adjacent nodes don't touch
+      const r1 = Math.max(leafR, nodeW * 0.65);
+      const r2 = r1 + nodeW * 1.1;
+      const r  = isOuter ? r2 : r1;
+      // Wider arc so nodes spread out
+      const arcSpread = Math.min(Math.PI * 0.9, (ringCount - 1) * 0.45 + 0.4);
+      const gap       = ringCount <= 1 ? 0 : arcSpread / (ringCount - 1);
+      const start     = base - arcSpread / 2;
+      const angle     = start + gap * idx;
+      return { x: gp.x + r * Math.cos(angle), y: gp.y + r * Math.sin(angle) };
+    } else {
+      // Three rings for very large groups (9+)
+      const perRing   = Math.ceil(total / 3);
+      const ring      = Math.floor(ni / perRing);
+      const idx       = ni % perRing;
+      const ringCount = ring === 2 ? total - perRing * 2 : perRing;
+      const r1 = Math.max(leafR * 0.9, nodeW * 0.6);
+      const r2 = r1 + nodeW * 1.0;
+      const r3 = r2 + nodeW * 1.0;
+      const r  = ring === 0 ? r1 : ring === 1 ? r2 : r3;
+      const arcSpread = Math.min(Math.PI * 1.0, (ringCount - 1) * 0.42 + 0.35);
+      const gap       = ringCount <= 1 ? 0 : arcSpread / (ringCount - 1);
+      const start     = base - arcSpread / 2;
       const angle     = start + gap * idx;
       return { x: gp.x + r * Math.cos(angle), y: gp.y + r * Math.sin(angle) };
     }
