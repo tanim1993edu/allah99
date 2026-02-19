@@ -13,8 +13,14 @@ export default {
       },
     },
     extend: {
-      colors: {
-        border: "hsl(var(--border))",
+        colors: {
+          gold: "hsl(var(--gold))",
+          emerald: "hsl(var(--emerald))",
+          surface: {
+            DEFAULT: "hsl(var(--surface))",
+            deep: "hsl(var(--surface-deep))",
+          },
+          border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
