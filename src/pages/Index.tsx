@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { BookOpen, CreditCard, Trophy, Sparkles, Network } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BookOpen, CreditCard, Trophy, Sparkles, Network, Sun, Moon } from "lucide-react";
 import CheatSheet from "@/components/CheatSheet";
 import BrowseNames from "@/components/BrowseNames";
 import Flashcards from "@/components/Flashcards";
@@ -18,13 +18,23 @@ const tabs: { id: Tab; label: string; icon: React.ReactNode; desc: string }[] = 
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState<Tab>("cheatsheet");
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
+
+  // Start in dark mode
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border/50 backdrop-blur-md bg-background/80">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="text-center mb-4">
+          <div className="relative text-center mb-4">
             <h1 className="text-2xl font-bold text-gold leading-tight">
               ٱللَّٰهُ
             </h1>
@@ -32,6 +42,14 @@ export default function Index() {
             <p className="text-xs text-muted-foreground">
               আসমাউল হুসনা • উত্তম নাম সব তাঁরই
             </p>
+            {/* Theme toggle */}
+            <button
+              onClick={() => setIsDark(d => !d)}
+              className="absolute right-0 top-0 p-2 rounded-full border border-border/50 bg-surface text-muted-foreground hover:text-foreground hover:border-gold/40 transition-all"
+              title={isDark ? "Light mode" : "Dark mode"}
+            >
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
           </div>
 
           {/* Tabs */}
