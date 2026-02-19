@@ -42,7 +42,9 @@ export default function MindMap() {
       const el = svgRef.current?.parentElement;
       if (!el) return;
       const w = el.clientWidth || 800;
-      setDimensions({ w, h: Math.min(w, 860) });
+      // height: square on desktop, slightly shorter on mobile
+      const h = w < 500 ? Math.min(w * 1.1, 480) : Math.min(w * 0.9, 700);
+      setDimensions({ w, h });
     };
     update();
     const ro = new ResizeObserver(update);
@@ -56,11 +58,11 @@ export default function MindMap() {
   const isMobile = w < 500;
 
   // centre node radius
-  const R0 = isMobile ? 46 : 58;
-  // group ring radius
-  const R1 = isMobile ? 120 : 158;
+  const R0 = isMobile ? 46 : 60;
+  // group ring radius — scale with viewport
+  const R1 = isMobile ? Math.min(w * 0.30, 130) : Math.min(w * 0.32, 220);
   // name leaf radius from group node
-  const leafR = isMobile ? 52 : 68;
+  const leafR = isMobile ? Math.min(w * 0.13, 56) : Math.min(w * 0.13, 80);
 
   // active groups with their names
   const groups = GROUPS.filter(g => names99.some(n => n.group === g.label));
