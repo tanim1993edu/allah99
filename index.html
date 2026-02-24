@@ -17,6 +17,16 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Lovable" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- SPA redirect recovery for GitHub Pages 404 fallback -->
+    <script>
+      (function () {
+        var redirect = window.sessionStorage.getItem('redirect');
+        window.sessionStorage.removeItem('redirect');
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   </head>
 
   <body>
